@@ -23,9 +23,9 @@ start_link() -> gen_server:start_link([local, ?SERVER], ?MODULE, [], []).
 
 init([]) -> {ok, up}.
 handle_call({factor,List},_From,State) ->
-    Gcf_list = doStuff(List, State),
+
 	{reply,
-		Gcf_list,
+		lists:foldl(fun(H,N) -> calculate_gcf(H,N) end,0,List),
 	State};%% not modifying the server's internal state
 handle_call(stop, _From, _State) -> 
 	{stop,normal,
@@ -41,7 +41,7 @@ doStuff([H,N|T], _) ->
 doStuff([], Gcf) ->
    Gcf.
 
-calculate_gcf(H,0) ->
+calculate_gcf(H,N) when N == 0 ->
     H;
 calculate_gcf(H, N) ->
     calculate_gcf(N, H rem N).
