@@ -32,23 +32,10 @@ handle_call(stop, _From, _State) ->
 		server_stopped,
     down}. %% setting the server's internal state to down
 
-% doStuff(List, _) ->
-%     doStuff(List, 0);
-doStuff([H,N|T], _) ->
-    % greatest common factor of the two numbers
-    NewGcf = calculate_gcf(H,N),
-    doStuff([H + 1,N + 1|T], NewGcf);
-doStuff([], Gcf) ->
-   Gcf.
-
 calculate_gcf(H,N) when N == 0 ->
     H;
 calculate_gcf(H, N) ->
     calculate_gcf(N, H rem N).
-
-
-
-
 
 %syncronizing send and receive functions
 handle_cast(_Msg, State) ->  {noreply, State}.
